@@ -1,5 +1,5 @@
-DJ Candikrush began her career at the tender age of 12, being and trained by legends like Grand Wizard Theodore and DJ of Washington DC and New York.
+Shui Oso is an emerging open-format DJ and music producer based in Baltimore, blending a fighter's focus with a curator's ear. After years of competing in Boxing, Kickboxing, Jiu Jitsu, and MMA, he's shifted that same discipline into his love for music-using DJing as a new arena to channel energy in entertaining a crowd. 
 
-Candace has been an established DJ for decades — opening for Kurtis touring with the No Profanity Tours, DJing for Adidas, and on radio stations both locally and internationally.
+Rooted in Baltimore club culture and raised on legends like KW Griff, K-Swift (R.I.P), and the 92Q crew as a whole, Shui Oso brings a deep appreciation for genre-mixing, rhythm, and raw emotion. 
 
-She is seasoned in many genres of the music industry — from House to Hip-Hop, Underground Jazz, Fusion Rock, and Pop.
+Sets from Shui Oso often feature his own original productions and remixes, keeping things fresh, unpredictable, and personal. Whether spining house, hip-hop, club, or anything in between, Shui's mission is simple: Keep the world Dancing! 
