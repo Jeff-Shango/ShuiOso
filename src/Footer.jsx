@@ -29,10 +29,10 @@ const Footer = () => {
     <footer className="site-footer">
       {/* Social Media Links */}
       <div className="social-links">
-        <a href="https://www.instagram.com/dj_candikrush.ckrushskate/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.instagram.com/shuiososound?igsh=MWUzcW5qejdjenYxNw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
           <FaInstagram size={30} />
         </a>
-        <a href="https://www.mixcloud.com/DjCandikrush/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.mixcloud.com/ShuiOso/" target="_blank" rel="noopener noreferrer">
           <FaMixcloud size={30} />
         </a>
       </div>
