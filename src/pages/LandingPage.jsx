@@ -66,6 +66,7 @@ const LandingPage = () => {
 {/* Floating Music Player */}
 <div className="floating-player">
   <iframe 
+    title="mixcloud"
     width="100%" 
     height="120" 
     src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2FShuiOso%2F" 
