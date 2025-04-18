@@ -1,0 +1,121 @@
+.event-showcase {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--space-md);
+  text-align: center;
+  color: var(--accent-color);
+  background-color: var(--primary-color);
+}
+
+.upcoming-list,
+.past-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--dark-gray);
+  transition: background-color 0.2s ease;
+  min-height: 100px;
+}
+
+.event-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.event-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.event-item div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+.event-item h3 {
+  margin: 0;
+  color: var(--highlight-color);
+  font-size: 1.1rem;
+}
+
+.event-item p {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.past-events-section {
+  margin-top: var(--space-lg);
+}
+
+.toggle-past-events {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+  padding: var(--space-xs) var(--space-sm);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: var(--space-sm);
+}
+
+.toggle-past-events:hover {
+  background-color: var(--highlight-color);
+  color: var(--primary-color);
+}
+
+.past-list {
+  margin-top: var(--space-sm);
+}
+
+.past {
+  background-color: rgba(255, 255, 255, 0.02);
+  border-left: 4px solid var(--highlight-color);
+  padding-left: var(--space-sm);
+  opacity: 0.8;
+}
+
+/* Optional badge using ::before (can be removed if not needed) */
+.past .event-item::before {
+  content: "PAST EVENT";
+  font-size: 0.7rem;
+  color: var(--highlight-color);
+  background: rgba(255, 204, 0, 0.1);
+  padding: 2px 6px;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+/* Responsive Layout */
+@media (max-width: 600px) {
+  .event-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .event-item div {
+    align-items: center;
+  }
+
+  .event-image {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+  }
+}

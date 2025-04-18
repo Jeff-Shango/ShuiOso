@@ -1,0 +1,419 @@
+.landing-page {
+background: transparent;
+color: var(--text-color);
+text-align: center;
+padding: var(--space-md) var(--space-sm);
+}
+
+.event-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
+  padding: var(--space-md) 0;
+  text-align: center;
+}
+
+
+.event-slider-background {
+  width: 100%;
+  max-width: 1000px;         /* Keeps it from stretching too wide on desktops */
+  margin: 0 auto;            /* ✨ Centers it horizontally */
+  min-height: 60vh;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: background-image 0.6s ease-in-out;
+  border-radius: 20px;       /* ✅ KEEPING THIS CURVE */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* optional polish */
+}
+
+.see-events-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  z-index: 2;
+  position: relative;
+}
+
+.see-events-btn {
+  background: linear-gradient(135deg, #111, #1f1f1f);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #ff5ec2;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 15px rgba(255, 94, 194, 0.4);
+}
+
+.see-events-btn:hover {
+  background-color: #ff5ec2;
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 94, 194, 0.7);
+}
+
+@media (max-width: 768px) {
+  .event-slider-background {
+    max-width: 95%;
+    min-height: 40vh;
+    border-radius: 12px;
+  }
+}
+
+
+
+.event-caption {
+  margin-top: var(--space-md);
+  text-align: center;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.event-caption h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-caption p {
+  font-size: 1.1rem;
+  color: var(--highlight-color);
+}
+
+@media (max-width: 768px) {
+  .event-slider-background {
+    min-height: 60vh;
+    padding: var(--space-md);
+  }
+
+  .event-overlay h2 {
+    font-size: 1.5rem;
+  }
+
+  .event-overlay p {
+    font-size: 1rem;
+  }
+}
+
+
+/* Optional hover effect */
+.event-slider-background:hover .event-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+
+
+.slide {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%; /* Add this */
+}
+
+
+.slide.active {
+display: flex;
+}
+
+.event-image {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  object-fit: contain;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+.event-image {
+  max-width: 100%;
+}
+}
+
+
+.event-image:hover {
+filter: brightness(0.85);
+}
+
+.event-info {
+background: rgba(0, 0, 0, 0.5);
+padding: var(--space-sm);
+color: var(--accent-color);
+font-size: 0.95rem;
+}
+
+.event-hover-hint {
+font-size: 0.8rem;
+color: var(--highlight-color);
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-top: var(--space-xs);
+}
+
+/* Dots for slider (if you use them later) */
+.slider-indicators {
+position: absolute;
+bottom: var(--space-xs);
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: var(--space-xs);
+}
+
+.slider-indicators span {
+width: 10px;
+height: 10px;
+border-radius: 50%;
+border: 1px solid var(--accent-color);
+background: transparent;
+display: inline-block;
+transition: all 0.3s ease;
+cursor: pointer;
+}
+
+.slider-indicators .active {
+background: var(--accent-color);
+}
+
+/* 📖 Bio Section */
+.bio-section {
+background: rgba(255, 255, 255, 0.02); /* subtle background layer */
+border-radius: var(--space-xs);
+padding: var(--space-lg) var(--space-md);
+margin: var(--space-lg) auto;
+max-width: 850px;
+text-align: center;
+box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+font-size: 1.1rem;
+line-height: 1.8;
+color: var(--text-color);
+}
+
+.bio-section p {
+margin-bottom: var(--space-sm);
+}
+
+/* 🏷️ Optional title styling */
+.bio-title {
+font-size: 1.4rem;
+font-weight: bold;
+margin-bottom: var(--space-sm);
+color: var(--accent-color);
+}
+
+/* By default, show desktop bio and hide mobile version */
+.full-bio-desktop {
+display: none;
+}
+
+.short-bio-mobile {
+display: block;
+position: relative;
+}
+
+.short-bio-mobile::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2rem;
+  background: linear-gradient(to top, var(--primary-color), transparent);
+  pointer-events: none;
+}
+
+.short-bio-mobile p {
+  text-align: left;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-height: 10em; /* allows more breathing room */
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.short-bio-mobile .see-more {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+}
+
+
+
+/* Show mobile version only on tablets and smaller */
+@media (max-width: 768px) {
+.full-bio-desktop {
+  display: block;
+}
+
+.short-bio-mobile {
+  display: none;
+}
+}
+
+
+/* 🔗 See More Link */
+
+/* .see-more {
+display: inline-block;
+margin-top: var(--space-xs);
+color: var(--highlight-color);
+cursor: pointer;
+font-weight: bold;
+text-decoration: underline;
+transition: color 0.3s ease;
+} */
+
+.see-more {
+  background: none;
+  color: var(--accent-color);
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.full-bio-desktop .see-more {
+  display: inline-block;
+}
+
+
+.see-more:hover {
+color: var(--secondary-color);
+}
+
+.full-bio-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto; /* allows the content to scroll inside */
+  padding: var(--space-md);
+  backdrop-filter: blur(3px); /* optional for depth */
+  animation: fadeInOverlay .5s ease-in-out;
+}
+
+@keyframes fadeInOverlay {
+  from {opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.full-bio-content {
+  background: transparent;
+  color: var(--text-color);
+  padding: var(--space-lg);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  text-align: left;
+}
+
+.full-bio-content p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+  text-align: left;
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--highlight-color);
+  cursor: pointer;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: var(--accent-color);
+}
+
+
+
+
+/* 🎧 Music Player */
+.music-player {
+margin-top: var(--space-lg);
+padding: var(--space-sm);
+text-align: center;
+}
+
+/* 🎵 Floating Mixcloud Player */
+.floating-player {
+  position: fixed;
+  bottom: var(--space-sm);
+  right: var(--space-sm);
+  width: 100%;
+  max-width: 350px;
+  z-index: 999;
+  border-radius: 100px;
+  /* border-radius: var(--space-xs); */
+  box-shadow: 0 0 20px rgba(255, 94, 194, 0.4); /* brighter glow */
+  background: black; 
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.floating-player iframe {
+  width: 100%;
+  height: 60px;
+  border-radius: 10px;
+}
+
+
+@keyframes pulse-outline {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 94, 194, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 94, 194, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 94, 194, 0.2);
+  }
+}
+
+
+
+/* 📱 Mobile & Tablet: Make it static and full width */
+@media (max-width: 768px) {
+  .floating-player {
+    position: static;
+    width: 100%;
+    margin-top: var(--space-md);
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 10px rgba(255, 94, 194, 0.2); /* slight glow on mobile */
+    border-radius: 0;
+    max-width: 600px;
+  }
+}
+

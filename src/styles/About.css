@@ -1,0 +1,104 @@
+.about-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    background-color: #0f0f0f;
+    color: #e0e0e0;
+  }
+  
+  .about-content {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+  }
+  
+  .about-heading {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+  
+  .about-heading::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    transform: translate(-50%, -50%);
+    background-image: url("../assets/photos/CandiKrushLogo.PNG"); /* adjust path */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.05; /* low opacity for subtlety */
+    z-index: 0;
+  }
+  
+  .about-heading h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.5rem;
+  }
+  
+  .about-content p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    color: #ccc;
+    line-height: 1.8;
+  }
+
+  .logo-text {
+    display: block;
+  }
+  
+  .logo-image {
+    display: none;
+    height: 40px;
+  }
+
+  .logo-and-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  
+  /* 👇 On small screens: hide text, show image */
+  @media (max-width: 768px) {
+    .logo-text {
+      display: none;
+    }
+  
+    .logo-image {
+      display: inline-block;
+    }
+  }
+  
+  
+  @media (max-width: 600px) {
+    .about-heading::before {
+      width: 140px;
+      height: 140px;
+    }
+  
+    .about-content h1 {
+      font-size: 2rem;
+    }
+  
+    .about-content p {
+      font-size: 1.1rem;
+    }
+  }
+  

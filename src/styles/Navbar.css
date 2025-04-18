@@ -1,0 +1,121 @@
+/* styles/Navbar.css */
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  /* background-color: var(--primary-color); */
+  background-color: transparent;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: none;
+}
+
+.navbar.scrolled {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-and-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-text {
+  font-weight: bold;
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  display: none; /* Hidden on mobile */
+}
+
+.logo-image {
+  height: 55px;
+  width: auto;
+  border-radius: 50%;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-size: 3.8rem;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  /* background-color: var(--primary-color); */
+  background: rgba(0, 0, 0, 0.75); /* dark semi-transparent overlay */
+backdrop-filter: blur(2px);     /* optional blur for gif softness */
+
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid var(--highlight-color);
+  transition: max-height 0.3s ease;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.nav-links.active {
+  display: flex;
+}
+
+.nav-links li {
+  padding: 1rem 0;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: var(--highlight-color);
+}
+
+/* Desktop View */
+@media (min-width: 768px) {
+  .logo-text {
+    display: block;
+  }
+
+  .menu-btn {
+    display: none;
+  }
+
+  .nav-links {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    gap: 1.5rem;
+    border-top: none;
+    background: none;
+  }
+
+  .nav-links li {
+    padding: 0;
+  }
+}

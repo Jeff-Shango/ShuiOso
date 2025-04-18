@@ -1,0 +1,276 @@
+:root {
+  /* 🎨 Colors */
+  --primary-color: url("../assets/photos/cityBckground.gif");
+  /* --primary-color: #1a1a1a; */
+  --secondary-color: #ff6600;
+  --accent-color: #ffffff;
+  --text-color: #dddddd;
+  --highlight-color: #a248ff;
+  --dark-gray: #333;
+
+
+  /* 📐 Spacing */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+
+  /* 🔤 Typography */
+  --font-main: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  --font-code: 'Courier New', monospace;
+
+  /* 🧱 Layout */
+  --container-max-width: 1200px;
+  --navbar-height: 80px;
+}
+
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding:0;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;}
+
+/* 🔧 Utility Classes */
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.pt-navbar {
+  padding-top: var(--navbar-height);
+}
+
+.btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: var(--space-sm);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: var(--highlight-color);
+}
+
+/* 🌐 Base App Structure */
+.App {
+  text-align: center;
+  font-family: var(--font-main);
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  width: 100%;
+  font-family: var(--font-main);
+
+}
+
+.App-logo {
+  height: 40vmin; /* Responsive */
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .App-logo {
+    height: 50vmin;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 🎯 App Header */
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-md);
+  font-size: clamp(1rem, 2.5vw, 2rem); /* Responsive text */
+  color: white;
+  text-align: center;
+}
+
+/* External Links */
+.App-link {
+  color: #61dafb;
+  text-decoration: underline;
+}
+
+/* 📬 Contact Section */
+.contact-section {
+  max-width: 400px;
+  margin: var(--space-md) auto;
+  padding: 0 var(--space-sm);
+  text-align: center;
+}
+
+.contact-section form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.contact-section input,
+.contact-section textarea {
+  width: 100%;
+  padding: var(--space-sm);
+  border: 1px solid #444;
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  font-size: 1rem;
+}
+
+.contact-section button {
+  background: linear-gradient(135deg, var(--secondary-color), var(--highlight-color));
+  color: var(--accent-color);
+  border: none;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 30px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.4);
+}
+
+.contact-section button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, var(--highlight-color), var(--secondary-color));
+  box-shadow: 0 6px 20px rgba(255, 204, 0, 0.5);
+    text-shadow: 0 0 8px var(--accent-color);
+
+}
+
+
+/* 🔗 Social Links */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-sm);
+}
+
+.social-links a {
+  color: var(--accent-color);
+  transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: scale(1.2);
+}
+
+/* 🔻 Footer */
+.site-footer {
+  text-align: center;
+  padding: var(--space-md) 0;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.site-footer p {
+  margin-top: var(--space-md);
+  opacity: 0.8;
+  font-size: 0.8rem;
+}
+
+/* 🧼 Floating Label Fields */
+.form-group {
+  position: relative;
+  margin-bottom: var(--space-sm);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: var(--space-sm);
+  padding-top: 1.5rem;
+  background-color: var(--primary-color);
+  border: 1px solid #444;
+  color: var(--accent-color);
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.form-group label {
+  position: absolute;
+  left: var(--space-sm);
+  top: 1rem;
+  color: #aaa;
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+/* Animate label on focus or if there's content */
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:focus + label,
+.form-group textarea:not(:placeholder-shown) + label {
+  top: 4px;
+  left: var(--space-sm);
+  font-size: 0.75rem;
+  color: var(--highlight-color);
+}
+
+
+/* 📱 Responsive Breakpoints */
+@media (max-width: 480px) {
+  /* mobile-xs */
+  body {
+    padding-top: 80px;
+    font-size: 1rem;
+    background: url("../assets/photos/cityBckground.gif");
+  }
+}
+
+@media (max-width: 768px) {
+  /* mobile */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* tablet */
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  /* desktop */
+}
+
+@media (min-width: 1441px) {
+  /* widescreen */
+}
