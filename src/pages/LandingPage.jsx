@@ -95,7 +95,7 @@ const LandingPage = () => {
         {/* Bio Section - Compact with "See more…" (Mobile/Tablet) */}
         {bio && (
           <div className="bio-section short-bio-mobile">
-            <p className="bio-title">DJ CANDIKRUSH</p>
+            <p className="bio-title">Shui Oso</p>
             <p>
               {bio.short}
               <span className="see-more" onClick={() => setShowFullBio(true)}>
