@@ -8,7 +8,7 @@ import Header from "./pages/Header";
 import Footer from "./Footer";
 import "./styles/App.css";
 import NotFound from "./pages/NotFound";
-import Admin from "./pages/Admin";
+// import Admin from "./pages/Admin";
 import Bio from "./pages/Bio";
 import Contact from "./pages/Contact";
 
@@ -23,7 +23,7 @@ function App() {
         <Route path="/events" element={<EventShowcase />} />
         <Route path="/music" element={<MusicPlayer />} />
         <Route path="*" element={<NotFound />} /> 
-        <Route path="/admin" element={<Admin />} /> 
+        {/* <Route path="/admin" element={<Admin />} />  */}
         <Route path="/bio" element={<Bio />} /> 
         <Route path="/contact" element={<Contact />} /> 
       </Routes>
