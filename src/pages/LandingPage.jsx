@@ -81,7 +81,7 @@ const LandingPage = () => {
         {/* Bio Section - Full (Desktop) */}
         {bio && (
           <div className="bio-section full-bio-desktop">
-            <p className="bio-title">DJ CANDIKRUSH</p>
+            <p className="bio-title">Shui Oso</p>
             <p>{bio.short}</p>
             <button className="see-more" onClick={() => setShowFullBio(true)}>
               Click to see more
