@@ -318,3 +318,9 @@ html, body {
     margin-bottom: var(--space-md);
   }
 }
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .site-footer p {
+    font-size: 0.6rem;
+  }
+}
