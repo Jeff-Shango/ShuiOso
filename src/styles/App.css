@@ -259,13 +259,6 @@ html, body {
   }
 }
 
-@media screen and (max-height: 500px) and (orientation: landscape) {
-  body {
-    padding-top: 80px; /* Adjust this based on navbar height */
-  }
-  
-}
-
 
 @media (max-width: 768px) {
   /* mobile */
@@ -281,4 +274,47 @@ html, body {
 
 @media (min-width: 1441px) {
   /* widescreen */
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .contact-section {
+    max-width: 90vw;
+    padding: var(--space-md);
+    background-color: rgba(255, 255, 255, 0.1); /* subtle bright bg for contrast */
+    border-radius: 12px;
+  }
+
+  .contact-section input,
+  .contact-section textarea {
+    font-size: 1rem;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.6); /* More contrast */
+    color: #fff;
+    border-radius: 6px;
+    border: 1px solid #999;
+  }
+
+  .contact-section h2 {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+  }
+
+  .site-footer p {
+    font-size: 0.65rem;
+    opacity: 0.6;
+  }
+
+  .social-links a svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .social-links {
+    gap: 1.25rem;
+    margin-bottom: var(--space-md);
+  }
 }
