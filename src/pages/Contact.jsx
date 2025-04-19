@@ -3,7 +3,7 @@ import '../styles/Contact.css';
 
 const Contact = () => {
   return (
-    <section className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <section className="ContactSection min-h-screen py-16 px-4 sm:px-6 lg:px-8">
     <div className="max-w-3xl mx-auto text-center">
       <h1 className="text-4xl font-bold mb-4 contactTitle">Let’s Talk</h1>
       <p className="contactText text-lg mb-12">

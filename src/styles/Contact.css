@@ -1,3 +1,10 @@
 .contactTitle, .contactText {
     color: white;
 }
+
+@media screen and (max-height: 800px) and (orientation: landscape) {
+     
+    .ContactSection {
+        padding-top: 6.5rem;
+    }
+  }
