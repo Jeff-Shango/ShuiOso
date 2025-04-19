@@ -1,10 +1,15 @@
 import React from 'react';
 import '../styles/Contact.css';
-import PageWrapper from './PageWrapper';
+// import PageWrapper from './PageWrapper';
 
 const Contact = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
-    <PageWrapper>
+    <>
     <section className="ContactSection min-h-screen py-16 px-4 sm:px-6 lg:px-8">
     <div className="max-w-3xl mx-auto text-center">
       <h1 className="text-4xl font-bold mb-4 contactTitle">Let’s Talk</h1>
@@ -13,7 +18,7 @@ const Contact = () => {
       </p>
     </div>
     </section>
-    </PageWrapper>
+    </>
   )
 }
 

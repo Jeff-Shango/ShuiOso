@@ -11,15 +11,12 @@ import NotFound from "./pages/NotFound";
 // import Admin from "./pages/Admin";
 import Bio from "./pages/Bio";
 import Contact from "./pages/Contact";
-import ScrollToTop from "./pages/ScrollToTop";
 
 function App() {
   return (
     <Router>
             {/* 🧱 Site Structure */}
       <Header />
-
-      <ScrollToTop/>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<About />} />

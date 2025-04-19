@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import sanityClient from "../sanityClient"; 
 import "../styles/EventShowcase.css"; 
-import PageWrapper from "./PageWrapper";
+// import PageWrapper from "./PageWrapper";
 // import { FaInstagram, FaMixcloud } from "react-icons/fa"; 
 
 const EventShowcase = () => {
@@ -9,6 +9,10 @@ const EventShowcase = () => {
   const [pastEvents, setPastEvents] = useState([]);
   const [showPastEvents, setShowPastEvents] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   useEffect(() => {
     sanityClient
       .fetch(`*[_type == "event"]{ title, date, "image": image.asset->url }`)
@@ -22,7 +26,7 @@ const EventShowcase = () => {
   }, []);
 
   return (
-    <PageWrapper>
+    <>
     <div className="event-showcase">
       <h1>Upcoming Events</h1>
       {upcomingEvents.length > 0 ? (
@@ -60,7 +64,7 @@ const EventShowcase = () => {
         )}
       </div>
     </div>
-    </PageWrapper>
+    </>
   );
 };
 
