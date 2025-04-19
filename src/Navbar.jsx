@@ -21,12 +21,12 @@ const Navbar = () => {
         <div className="logo-and-toggle">
           <Link to="/" className="navbar-logo">
             {/* 👇 Show full text on desktop */}
-            <span className="logo-text">DJ CANDIKRUSH "CANDACE"</span>
+            <span className="logo-text">Shui Oso</span>
 
             {/* 👇 Show image logo on mobile */}
             <img
               src={logoImage}
-              alt="DJ Candikrush Logo"
+              alt="Shui Oso Logo"
               className="logo-image"
             />
           </Link>

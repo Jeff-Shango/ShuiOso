@@ -259,6 +259,14 @@ html, body {
   }
 }
 
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  body {
+    padding-top: 80px; /* Adjust this based on navbar height */
+  }
+  
+}
+
+
 @media (max-width: 768px) {
   /* mobile */
 }
