@@ -418,6 +418,9 @@ text-align: center;
 }
 
 @media screen and (max-height: 800px) and (orientation: landscape) {
+  .landing-page {
+    padding-top: 6.5rem;
+  }
   .event-image {
     width: 90vw;
     height: auto;
