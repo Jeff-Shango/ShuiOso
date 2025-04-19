@@ -30,8 +30,8 @@
 
 .event-image {
   width: 90vw;
-  height: auto;
-  object-fit: cover;
+  height: 30rem;
+  object-fit: contain;
   border-radius: 8px;
   flex-shrink: 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
