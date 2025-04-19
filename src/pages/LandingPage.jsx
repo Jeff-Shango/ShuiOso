@@ -3,6 +3,7 @@ import sanityClient from "../sanityClient";
 // import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 import "../styles/LandingPage.css";
+import PageWrapper from "./PageWrapper";
 
 const LandingPage = () => {
   const [events, setEvents] = useState([]);
@@ -40,7 +41,7 @@ const LandingPage = () => {
   };
 
   return (
-    <>
+    <PageWrapper>
       <div className="landing-page">
         {/* Event Slider */}
         {events.length > 0 && (
@@ -127,7 +128,7 @@ const LandingPage = () => {
       {events.length === 0 && <p style={{ color: 'white' }}>No events loaded.</p>}
 {!bio && <p style={{ color: 'white' }}>No bio loaded.</p>}
 
-    </>
+    </PageWrapper>
     
   );
 };
