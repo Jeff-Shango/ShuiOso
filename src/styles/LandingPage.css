@@ -417,3 +417,15 @@ text-align: center;
   }
 }
 
+@media screen and (max-height: 800px) and (orientation: landscape) {
+  .event-image {
+    width: 90vw;
+    height: auto;
+  }
+
+  .event-card {
+    padding: 1rem;
+  }
+}
+
+
