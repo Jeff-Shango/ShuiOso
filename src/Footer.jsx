@@ -1,6 +1,6 @@
 import React from "react";
 import emailjs from "emailjs-com";
-import { FaInstagram, FaMixcloud } from "react-icons/fa"; // Social Icons
+import { FaInstagram, FaMixcloud, FaYoutube } from "react-icons/fa";
 import "./styles/App.css"; // Global Styles
 
 const Footer = () => {
@@ -35,6 +35,10 @@ const Footer = () => {
         <a href="https://www.mixcloud.com/ShuiOso/" target="_blank" rel="noopener noreferrer">
           <FaMixcloud size={30} />
         </a>
+        <a href="https://www.youtube.com/@Shui-Oso" target="_blank" rel="noopener noreferrer">
+          <FaYoutube size={30} />
+        </a>
+
       </div>
 
       {/* Contact Section */}
