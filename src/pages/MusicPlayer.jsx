@@ -1,11 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../styles/MusicPlayer.css"
-import Imagination from "../assets/audio/Imagination.wav"
+import "../styles/MusicPlayer.css";
+import Imagination from "../assets/audio/Imagination.wav";
+import RightThing from "../assets/audio/RightThing.wav";
+import CommanderMeat from "../assets/audio/CommanderMeat.wav";
 
 const MusicPlayer = () => {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
   const [effectType, setEffectType] = useState("bars");
+
+  const songs = [
+    { title: "Imagination", src: Imagination },
+    { title: "Right Thing", src: RightThing },
+    { title: "Commander Meat", src: CommanderMeat },
+  ];
+
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -18,7 +28,7 @@ const MusicPlayer = () => {
     
     source.connect(analyzer);
     analyzer.connect(audioContext.destination);
-    analyzer.fftSize = 256; // Defines the frequency bin count
+    analyzer.fftSize = 256;
 
     const bufferLength = analyzer.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
@@ -41,9 +51,8 @@ const MusicPlayer = () => {
     };
 
     renderFrame();
-  }, [effectType]); // Re-run effect when effectType changes
+  }, [effectType]);
 
-  // 🔹 Bar Visualizer (Classic)
   const renderBars = (ctx, dataArray, canvas) => {
     const barWidth = (canvas.width / dataArray.length) * 2.5;
     let x = 0;
@@ -56,7 +65,6 @@ const MusicPlayer = () => {
     }
   };
 
-  // 🔹 Waveform Visualizer (Oscilloscope)
   const renderWaveform = (ctx, dataArray, canvas) => {
     ctx.lineWidth = 2;
     ctx.strokeStyle = "rgb(0, 255, 255)";
@@ -82,7 +90,6 @@ const MusicPlayer = () => {
     ctx.stroke();
   };
 
-  // 🔹 Radial Visualizer (Circular)
   const renderRadial = (ctx, dataArray, canvas) => {
     ctx.translate(canvas.width / 2, canvas.height / 2);
     let radius = 100;
@@ -102,35 +109,44 @@ const MusicPlayer = () => {
     ctx.resetTransform();
   };
 
+  const handleNext = () => {
+    setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % songs.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentTrackIndex((prevIndex) =>
+      prevIndex === 0 ? songs.length - 1 : prevIndex - 1
+    );
+  };
+
+  // 🔄 Reload audio when track changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+      audioRef.current.play();
+    }
+  }, [currentTrackIndex]);
+
   return (
     <div className="music-player-container">
-      {/* Visualizer Canvas */}
       <canvas ref={canvasRef} className="visualizer"></canvas>
 
-      {/* Music Player Controls */}
       <div className="audio-controls">
+        <h3>{songs[currentTrackIndex].title}</h3>
         <audio ref={audioRef} controls>
-          <source src={Imagination} type="audio/mpeg" />
+          <source src={songs[currentTrackIndex].src} type="audio/wav" />
           Your browser does not support the audio element.
         </audio>
+        <div className="track-buttons">
+          <button onClick={handlePrev}>⏮ Prev</button>
+          <button onClick={handleNext}>Next ⏭</button>
+        </div>
       </div>
 
-      {/* Buttons to Switch Visualizer Mode */}
       <div className="visualizer-controls">
         <button onClick={() => setEffectType("bars")}>Bars</button>
         <button onClick={() => setEffectType("waveform")}>Waveform</button>
         <button onClick={() => setEffectType("radial")}>Radial</button>
-      </div>
-
-      {/* Mixcloud Embed */}
-      <div className="mixcloud-player">
-        <iframe
-          title="MixCloud"
-          width="100%"
-          height="120"
-          src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FDjCandikrush%2F"
-          frameBorder="0"
-        ></iframe>
       </div>
     </div>
   );

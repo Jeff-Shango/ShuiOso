@@ -4,10 +4,6 @@ import "../styles/NotFound.css";
 // import PageWrapper from "./PageWrapper";
 
 const NotFound = () => {
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   
   return (
     <>

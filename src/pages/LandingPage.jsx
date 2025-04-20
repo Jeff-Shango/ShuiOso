@@ -12,9 +12,6 @@ const LandingPage = () => {
   const [bio, setBio] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   
   useEffect(() => {
     // Fetch events

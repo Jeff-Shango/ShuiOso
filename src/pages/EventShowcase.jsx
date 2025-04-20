@@ -8,10 +8,6 @@ const EventShowcase = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [pastEvents, setPastEvents] = useState([]);
   const [showPastEvents, setShowPastEvents] = useState(false);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   
   useEffect(() => {
     sanityClient

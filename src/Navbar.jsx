@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './styles/Navbar.css';
 import logoImage from './assets/photos/ShuiOsoJLogo.png'; // update path as needed
+import MusicPlayer from './pages/MusicPlayer';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -42,6 +43,7 @@ const Navbar = () => {
 
         <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
           <li><Link to="/events" onClick={() => setMenuOpen(false)}>Events</Link></li>
+          <li><Link to="/music" onClick={() => setMenuOpen(false)}>Music Player</Link></li>
           <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Let's Talk</Link></li>
         </ul>
 
