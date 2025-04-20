@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './styles/Navbar.css';
 import logoImage from './assets/photos/ShuiOsoJLogo.png'; // update path as needed
-import MusicPlayer from './pages/MusicPlayer';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
