@@ -76,7 +76,7 @@ const MusicPlayer = () => {
     };
 
     tryPlay();
-  }, [currentTrackIndex]);
+  }, [currentTrackIndex, songs]); // ✅ added `songs` here to fix ESLint error
 
   const handleNext = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % songs.length);
