@@ -16,60 +16,81 @@ const MusicPlayer = () => {
   const sourceRef = useRef(null);
   const analyzerRef = useRef(null);
 
+  // Sets audio src when track changes
   useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.src = songs[currentTrackIndex].src;
+    }
+  }, [currentTrackIndex, songs]);
+
+  const handlePlay = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
+    // Setup audio context
     if (!audioContextRef.current) {
       audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
     }
 
     const audioContext = audioContextRef.current;
 
+    if (audioContext.state === "suspended") {
+      await audioContext.resume();
+    }
+
+    // Disconnect previous source
+    if (sourceRef.current) {
+      try {
+        sourceRef.current.disconnect();
+      } catch (e) {
+        console.warn("Couldn't disconnect source:", e);
+      }
+      sourceRef.current = null;
+    }
+
+    // Setup new analyzer + connection
     if (!analyzerRef.current) {
       analyzerRef.current = audioContext.createAnalyser();
       analyzerRef.current.fftSize = 256;
     }
 
-    if (!sourceRef.current) {
-      sourceRef.current = audioContext.createMediaElementSource(audio);
-      sourceRef.current.connect(analyzerRef.current);
-      analyzerRef.current.connect(audioContext.destination);
-    }
+    const source = audioContext.createMediaElementSource(audio);
+    source.connect(analyzerRef.current);
+    analyzerRef.current.connect(audioContext.destination);
+    sourceRef.current = source;
 
+    // Setup visualizer
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const analyzer = analyzerRef.current;
-    const dataArray = new Uint8Array(analyzer.frequencyBinCount);
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const dataArray = new Uint8Array(analyzerRef.current.frequencyBinCount);
 
     const renderFrame = () => {
       requestAnimationFrame(renderFrame);
-      analyzer.getByteFrequencyData(dataArray);
+      analyzerRef.current.getByteFrequencyData(dataArray);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       renderPulse(ctx, dataArray, canvas);
     };
 
     renderFrame();
 
-    // Set song src and try to play
-    audio.src = songs[currentTrackIndex].src;
-    audio.load();
-    audio
-      .play()
-      .catch((err) => console.warn("Autoplay blocked:", err));
-  }, [currentTrackIndex, songs]);
+    // Play the audio
+    try {
+      await audio.play();
+    } catch (err) {
+      console.warn("Playback blocked:", err);
+    }
+  };
 
   const handleNext = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % songs.length);
+    setTimeout(() => handlePlay(), 0);
   };
 
   const handlePrev = () => {
     setCurrentTrackIndex((prevIndex) =>
       prevIndex === 0 ? songs.length - 1 : prevIndex - 1
     );
+    setTimeout(() => handlePlay(), 0);
   };
 
   const renderPulse = (ctx, dataArray, canvas) => {
@@ -96,7 +117,10 @@ const MusicPlayer = () => {
               className={`song-list-item ${
                 index === currentTrackIndex ? "active" : ""
               }`}
-              onClick={() => setCurrentTrackIndex(index)}
+              onClick={() => {
+                setCurrentTrackIndex(index);
+                setTimeout(() => handlePlay(), 0);
+              }}
             >
               {song.title}
             </li>
@@ -106,7 +130,7 @@ const MusicPlayer = () => {
 
       <div className="audio-controls">
         <h3>{songs[currentTrackIndex].title}</h3>
-        <audio ref={audioRef} controls preload="auto" />
+        <audio ref={audioRef} controls onPlay={handlePlay} />
         <div className="track-buttons">
           <button className="nav-button" onClick={handlePrev}>⏮ Prev</button>
           <button className="nav-button" onClick={handleNext}>Next ⏭</button>
