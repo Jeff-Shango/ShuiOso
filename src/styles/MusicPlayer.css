@@ -1,45 +1,83 @@
 .music-player-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: black;
-    color: white;
-    text-align: center;
-  }
-  
-  .visualizer {
-    width: 100%;
-    height: 50vh;
-    display: block;
-    background: black;
-  }
-  
-  .audio-controls {
-    margin-top: 20px;
-  }
-  
-  audio {
-    width: 300px;
-  }
-  
-  /* Buttons for Switching Visualizer */
-  .visualizer-controls {
-    margin-top: 20px;
-  }
-  
-  .visualizer-controls button {
-    margin: 5px;
-    padding: 10px 20px;
-    background: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .visualizer-controls button:hover {
-    background: #555;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: black;
+  color: white;
+  text-align: center;
+  position: relative;
+  padding: 1rem;
+}
+
+.visualizer {
+  width: 100%;
+  height: 50vh;
+  display: block;
+  background: black;
+}
+
+.song-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 20px 0;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background-color: #111;
+}
+
+.song-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.song-list-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #222;
+  color: #ccc;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.song-list-item:hover {
+  background-color: #222;
+  color: #fff;
+}
+
+.song-list-item.active {
+  background-color: #00f;
+  color: #fff;
+  font-weight: bold;
+}
+
+.audio-controls {
+  margin-top: 20px;
+}
+
+audio {
+  width: 300px;
+}
+
+.track-buttons {
+  margin-top: 15px;
+}
+
+.nav-button {
+  margin: 5px;
+  padding: 10px 20px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.nav-button:hover {
+  background: #555;
+}
