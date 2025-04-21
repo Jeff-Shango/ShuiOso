@@ -19,28 +19,31 @@ const MusicPlayer = () => {
   const sourceRef = useRef(null);
   const analyzerRef = useRef(null);
 
-  // One-time setup for audio context + analyzer
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    audioContextRef.current = audioContext;
+    if (!audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+    }
 
-    const source = audioContext.createMediaElementSource(audio);
-    const analyzer = audioContext.createAnalyser();
-    analyzer.fftSize = 256;
+    const audioContext = audioContextRef.current;
 
-    source.connect(analyzer);
-    analyzer.connect(audioContext.destination);
+    if (!analyzerRef.current) {
+      analyzerRef.current = audioContext.createAnalyser();
+      analyzerRef.current.fftSize = 256;
+    }
 
-    sourceRef.current = source;
-    analyzerRef.current = analyzer;
+    if (!sourceRef.current) {
+      sourceRef.current = audioContext.createMediaElementSource(audio);
+      sourceRef.current.connect(analyzerRef.current);
+      analyzerRef.current.connect(audioContext.destination);
+    }
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const bufferLength = analyzer.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
+    const analyzer = analyzerRef.current;
+    const dataArray = new Uint8Array(analyzer.frequencyBinCount);
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -53,30 +56,13 @@ const MusicPlayer = () => {
     };
 
     renderFrame();
-  }, []);
 
-  // Change song src and play
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.src = songs[currentTrackIndex].src;
+    // Autoplay current song
     audio.load();
-
-    // Resume context (in case it's suspended)
-    const tryPlay = async () => {
-      try {
-        if (audioContextRef.current?.state === "suspended") {
-          await audioContextRef.current.resume();
-        }
-        await audio.play();
-      } catch (err) {
-        console.warn("Playback blocked:", err);
-      }
-    };
-
-    tryPlay();
-  }, [currentTrackIndex, songs]); // ✅ added `songs` here to fix ESLint error
+    audio
+      .play()
+      .catch((err) => console.warn("Autoplay blocked:", err));
+  }, [currentTrackIndex, songs]); // ✅ fixed ESLint issue
 
   const handleNext = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % songs.length);
@@ -89,7 +75,7 @@ const MusicPlayer = () => {
   };
 
   const renderPulse = (ctx, dataArray, canvas) => {
-    const average = dataArray.reduce((sum, val) => sum + val, 0) / dataArray.length;
+    const average = dataArray.reduce((sum, value) => sum + value, 0) / dataArray.length;
     const radius = average * 1.5;
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
@@ -122,7 +108,10 @@ const MusicPlayer = () => {
 
       <div className="audio-controls">
         <h3>{songs[currentTrackIndex].title}</h3>
-        <audio ref={audioRef} controls />
+        <audio ref={audioRef} controls>
+          <source src={songs[currentTrackIndex].src} type="audio/wav" />
+          Your browser does not support the audio element.
+        </audio>
         <div className="track-buttons">
           <button className="nav-button" onClick={handlePrev}>⏮ Prev</button>
           <button className="nav-button" onClick={handleNext}>Next ⏭</button>
