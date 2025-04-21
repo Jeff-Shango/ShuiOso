@@ -1,17 +1,14 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import "../styles/MusicPlayer.css";
-import Imagination from "../assets/audio/Imagination.wav";
-import RightThing from "../assets/audio/RightThing.wav";
-import CommanderMeat from "../assets/audio/CommanderMeat.wav";
 
 const MusicPlayer = () => {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
 
   const songs = useMemo(() => [
-    { title: "Imagination", src: Imagination },
-    { title: "Right Thing", src: RightThing },
-    { title: "Commander Meat", src: CommanderMeat },
+    { title: "Imagination", src: "/audio/Imagination.mp3" },
+    { title: "Right Thing", src: "/audio/RightThing.mp3" },
+    { title: "Commander Meat", src: "/audio/CommanderMeat.mp3" },
   ], []);
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -57,12 +54,13 @@ const MusicPlayer = () => {
 
     renderFrame();
 
-    // Autoplay current song
+    // Set song src and try to play
+    audio.src = songs[currentTrackIndex].src;
     audio.load();
     audio
       .play()
       .catch((err) => console.warn("Autoplay blocked:", err));
-  }, [currentTrackIndex, songs]); // ✅ works with useMemo now
+  }, [currentTrackIndex, songs]);
 
   const handleNext = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % songs.length);
@@ -108,10 +106,7 @@ const MusicPlayer = () => {
 
       <div className="audio-controls">
         <h3>{songs[currentTrackIndex].title}</h3>
-        <audio ref={audioRef} controls>
-          <source src={songs[currentTrackIndex].src} type="audio/wav" />
-          Your browser does not support the audio element.
-        </audio>
+        <audio ref={audioRef} controls preload="auto" />
         <div className="track-buttons">
           <button className="nav-button" onClick={handlePrev}>⏮ Prev</button>
           <button className="nav-button" onClick={handleNext}>Next ⏭</button>
