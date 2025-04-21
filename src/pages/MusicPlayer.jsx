@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import "../styles/MusicPlayer.css";
 import Imagination from "../assets/audio/Imagination.wav";
 import RightThing from "../assets/audio/RightThing.wav";
@@ -8,11 +8,11 @@ const MusicPlayer = () => {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
 
-  const songs = [
+  const songs = useMemo(() => [
     { title: "Imagination", src: Imagination },
     { title: "Right Thing", src: RightThing },
     { title: "Commander Meat", src: CommanderMeat },
-  ];
+  ], []);
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const audioContextRef = useRef(null);
@@ -62,7 +62,7 @@ const MusicPlayer = () => {
     audio
       .play()
       .catch((err) => console.warn("Autoplay blocked:", err));
-  }, [currentTrackIndex, songs]); // ✅ fixed ESLint issue
+  }, [currentTrackIndex, songs]); // ✅ works with useMemo now
 
   const handleNext = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % songs.length);
