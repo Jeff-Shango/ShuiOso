@@ -6,9 +6,9 @@ const MusicPlayer = () => {
   const audioRef = useRef(null);
 
   const songs = useMemo(() => [
-    { title: "Imagination", src: "/audio/Imagination.mp3" },
-    { title: "Right Thing", src: "/audio/RightThing.mp3" },
-    { title: "Commander Meat", src: "/audio/CommanderMeat.mp3" },
+    { title: "Imagination", src: "/audio/Imagination.wav" },
+    { title: "Right Thing", src: "/audio/RightThing.wav" },
+    { title: "Commander Meat", src: "/audio/CommanderMeat.wav" },
   ], []);
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
