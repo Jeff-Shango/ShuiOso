@@ -8,10 +8,10 @@ const Footer = () => {
     e.preventDefault();
 
     emailjs.sendForm(
-      "service_heulnra", 
-      "template_hyqtg4k", 
+      "service_98g590d", 
+      "DjSite_Message", 
       e.target, 
-      "C3hNudHol2HbPpoBm"
+      "mYD0XtrHqKMCCWhkE"
     ).then(
       () => {
         alert("Message sent successfully!");
