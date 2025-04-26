@@ -9,7 +9,7 @@ const Footer = () => {
 
     emailjs.sendForm(
       "service_98g590d", 
-      "DjSite_Message", 
+      "template_ivdjt0n", 
       e.target, 
       "mYD0XtrHqKMCCWhkE"
     ).then(
