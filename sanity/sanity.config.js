@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'default',
   title: 'DjShuiOso',
 
-  projectId: '78rm18mc',
+  projectId: '30dddoth',
   dataset: 'production',
 
   plugins: [structureTool(), visionTool()],
