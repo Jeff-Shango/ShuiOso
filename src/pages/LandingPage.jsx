@@ -12,7 +12,8 @@ const LandingPage = () => {
 
   // Shuffle slideshow state
   const [playOrder, setPlayOrder] = useState([]);
-  const [playPos, setPlayPos] = useState(0);
+  const [, setPlayPos] = useState(0);
+
 
   // Bio state
   const [showFullBio, setShowFullBio] = useState(false);

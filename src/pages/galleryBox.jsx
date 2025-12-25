@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import sanityClient from "../sanityClient";
-import "../styles/GalleryBox.css";
+import "../styles/galleryBox.css";
 
 const GALLERY_QUERY = `*[_type == "galleryItem"] | order(_createdAt desc){
   _id,
