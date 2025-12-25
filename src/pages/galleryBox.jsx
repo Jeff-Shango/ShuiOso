@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import sanityClient from "../sanityClient";
 import "../styles/galleryBox.css";
+import { useLocation } from "react-router-dom"; // ✅ add this
 
 const GALLERY_QUERY = `*[_type == "galleryItem"] | order(_createdAt desc){
   _id,
@@ -19,8 +20,13 @@ function shuffleArray(arr) {
 }
 
 export default function GalleryBox({ preselectId = null }) {
+  const location = useLocation(); // ✅ add this
+
+  // ✅ key line: if prop not provided, fall back to router state
+  const selectedId = preselectId || location.state?.preselectId || null;
+
   const [items, setItems] = useState([]);
-  const [activeId, setActiveId] = useState(null); // <-- track by id (stable)
+  const [activeId, setActiveId] = useState(null); // track by id (stable)
 
   // Fetch gallery
   useEffect(() => {
@@ -33,12 +39,12 @@ export default function GalleryBox({ preselectId = null }) {
   // OPTIONAL: shuffle for display, but selection is by id so it's safe
   const displayItems = useMemo(() => shuffleArray(items), [items]);
 
-  // Set active image when coming from LandingPage
+  // ✅ Set active image when coming from LandingPage
   useEffect(() => {
-    if (!preselectId) return;
+    if (!selectedId) return;
     if (!items.length) return;
-    setActiveId(preselectId);
-  }, [preselectId, items.length]);
+    setActiveId(selectedId);
+  }, [selectedId, items.length]);
 
   // Find active item + active index in the DISPLAY list (for arrows)
   const activeIndex = useMemo(() => {
@@ -63,7 +69,8 @@ export default function GalleryBox({ preselectId = null }) {
       }
 
       if (e.key === "ArrowLeft" && displayItems.length > 0) {
-        const prevIdx = (activeIndex - 1 + displayItems.length) % displayItems.length;
+        const prevIdx =
+          (activeIndex - 1 + displayItems.length) % displayItems.length;
         setActiveId(displayItems[prevIdx]._id);
       }
     };
@@ -130,7 +137,8 @@ export default function GalleryBox({ preselectId = null }) {
                   className="nav-btn"
                   onClick={() => {
                     const prevIdx =
-                      (activeIndex - 1 + displayItems.length) % displayItems.length;
+                      (activeIndex - 1 + displayItems.length) %
+                      displayItems.length;
                     setActiveId(displayItems[prevIdx]._id);
                   }}
                 >
