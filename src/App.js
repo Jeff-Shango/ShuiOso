@@ -12,6 +12,26 @@ import NotFound from "./pages/NotFound";
 import Bio from "./pages/Bio";
 import Contact from "./pages/Contact";
 import GalleryBox from "./pages/galleryBox";
+import {
+  createRouteCounter,
+  maybeFireNavigatedAround,
+  startEngagementTimer,
+} from "./utils/engagementTracker";
+const location = useLocation();
+const routeCounter = useMemo(() => createRouteCounter(), []);
+
+useEffect(() => {
+  const count = routeCounter.inc();
+  maybeFireNavigatedAround(location.pathname, count);
+}, [location.pathname, routeCounter]);
+
+useEffect(() => {
+  const stop = startEngagementTimer(
+    () => location.pathname,
+    () => routeCounter.get()
+  );
+  return stop;
+}, [location.pathname, routeCounter]);
 
 function App() {
   return (
