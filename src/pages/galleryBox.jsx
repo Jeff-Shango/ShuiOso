@@ -18,7 +18,7 @@ function shuffleArray(arr) {
   return a;
 }
 
-export default function GalleryBox() {
+export default function GalleryBox({ preselectId = null }) {
   const [items, setItems] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -34,6 +34,15 @@ export default function GalleryBox() {
 
   const activeItem =
     activeIndex === null ? null : shuffledItems[activeIndex] || null;
+
+  // If a preselectId is provided (from LandingPage click), open that image
+  useEffect(() => {
+    if (!preselectId) return;
+    if (!shuffledItems.length) return;
+
+    const idx = shuffledItems.findIndex((it) => it._id === preselectId);
+    if (idx >= 0) setActiveIndex(idx);
+  }, [preselectId, shuffledItems]);
 
   // Keyboard support (ESC close, arrows nav)
   useEffect(() => {
@@ -94,15 +103,17 @@ export default function GalleryBox() {
               className="lightbox-img"
             />
 
-            {/* Caption ONLY in enlarged view */}
             {(activeItem.title || activeItem.caption) && (
               <div className="lightbox-caption">
-                {activeItem.title && <div className="cap-title">{activeItem.title}</div>}
-                {activeItem.caption && <div className="cap-text">{activeItem.caption}</div>}
+                {activeItem.title && (
+                  <div className="cap-title">{activeItem.title}</div>
+                )}
+                {activeItem.caption && (
+                  <div className="cap-text">{activeItem.caption}</div>
+                )}
               </div>
             )}
 
-            {/* optional arrows */}
             {shuffledItems.length > 1 && (
               <div className="lightbox-nav">
                 <button
@@ -115,7 +126,9 @@ export default function GalleryBox() {
                 </button>
                 <button
                   className="nav-btn"
-                  onClick={() => setActiveIndex((i) => (i + 1) % shuffledItems.length)}
+                  onClick={() =>
+                    setActiveIndex((i) => (i + 1) % shuffledItems.length)
+                  }
                 >
                   →
                 </button>

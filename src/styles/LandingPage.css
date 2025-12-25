@@ -5,6 +5,20 @@ text-align: center;
 padding: var(--space-md) var(--space-sm);
 }
 
+.gallery-spotlight {
+  margin-top: 18px;
+  cursor: pointer;
+}
+
+.gallery-spotlight-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+}
+
+
 .event-slider {
   display: flex;
   justify-content: center;

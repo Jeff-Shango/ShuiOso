@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import sanityClient from "../sanityClient";
-// import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 import "../styles/LandingPage.css";
-import GalleryBox from "./galleryBox";
-// import PageWrapper from "./PageWrapper";
 
 const LandingPage = () => {
   const [events, setEvents] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Shuffle slideshow state
+  // Shuffle slideshow state for EVENTS
   const [playOrder, setPlayOrder] = useState([]);
   const [, setPlayPos] = useState(0);
 
+  // Gallery spotlight slideshow
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [gallerySpotlightIndex, setGallerySpotlightIndex] = useState(0);
 
   // Bio state
   const [showFullBio, setShowFullBio] = useState(false);
@@ -31,20 +31,36 @@ const LandingPage = () => {
     return arr;
   };
 
-  // Fetch events + bio on load
+  // Fetch events + bio + gallery spotlight list on load
   useEffect(() => {
+    // Fetch gallery items for spotlight
+    sanityClient
+      .fetch(`*[_type == "galleryItem"]{ _id, "image": image.asset->url }`)
+      .then((data) => {
+        const items = Array.isArray(data) ? data : [];
+        // shuffle once so spotlight starts randomized
+        for (let i = items.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [items[i], items[j]] = [items[j], items[i]];
+        }
+        setGalleryItems(items);
+        setGallerySpotlightIndex(0);
+      })
+      .catch((err) => console.error("Gallery Spotlight fetch error:", err));
+
     // Fetch events
     sanityClient
       .fetch(`*[_type == "event"]{ title, date, "image": image.asset->url }`)
       .then((data) => {
-        setEvents(data);
+        const safe = Array.isArray(data) ? data : [];
+        setEvents(safe);
 
-        // initialize shuffle order so slideshow starts randomized
-        if (data?.length > 0) {
-          const order = makeShuffledOrder(data.length);
+        // initialize shuffle order so events slideshow starts randomized
+        if (safe.length > 0) {
+          const order = makeShuffledOrder(safe.length);
           setPlayOrder(order);
           setPlayPos(0);
-          setCurrentIndex(order[0]); // start on a random first slide
+          setCurrentIndex(order[0]);
         }
       })
       .catch((error) => console.error("Sanity Fetch Error:", error));
@@ -56,15 +72,24 @@ const LandingPage = () => {
       .catch((error) => console.error("Bio Fetch Error:", error));
   }, []);
 
-  // Shuffle slideshow interval (always cycles in random order)
+  // Gallery spotlight interval
   useEffect(() => {
-    // Only run if we have > 1 event and a valid playOrder
+    if (galleryItems.length > 1) {
+      const interval = setInterval(() => {
+        setGallerySpotlightIndex((i) => (i + 1) % galleryItems.length);
+      }, 4000);
+      return () => clearInterval(interval);
+    }
+  }, [galleryItems.length]);
+
+  // Shuffle EVENTS slideshow interval (always cycles in random order)
+  useEffect(() => {
     if (events.length > 1 && playOrder.length === events.length) {
       const interval = setInterval(() => {
         setPlayPos((prevPos) => {
           const nextPos = prevPos + 1;
 
-          // If we hit the end, reshuffle and start over
+          // End reached → reshuffle + start over
           if (nextPos >= playOrder.length) {
             const newOrder = makeShuffledOrder(events.length);
             setPlayOrder(newOrder);
@@ -72,7 +97,6 @@ const LandingPage = () => {
             return 0;
           }
 
-          // Otherwise advance to the next shuffled item
           setCurrentIndex(playOrder[nextPos]);
           return nextPos;
         });
@@ -80,10 +104,23 @@ const LandingPage = () => {
 
       return () => clearInterval(interval);
     }
-  }, [events, playOrder]);
+  }, [events.length, playOrder]);
 
   const handleImageClick = () => {
     navigate("/events");
+  };
+
+  const handleGallerySpotlightClick = () => {
+    const active = galleryItems[gallerySpotlightIndex];
+
+    // If we don't have an id for some reason, just go to the gallery page
+    if (!active?._id) {
+      navigate("/gallery");
+      return;
+    }
+
+    // Pass the clicked image id to Gallery page so it opens/highlights it
+    navigate("/gallery", { state: { preselectId: active._id } });
   };
 
   return (
@@ -109,8 +146,22 @@ const LandingPage = () => {
           </button>
         </div>
 
-        {/* Gallery */}
-        <GalleryBox />
+        {/* Gallery Spotlight Slideshow (one box) */}
+        {galleryItems.length > 0 && (
+          <div
+            className="gallery-spotlight"
+            onClick={handleGallerySpotlightClick}
+            role="button"
+            tabIndex={0}
+          >
+            <img
+              className="gallery-spotlight-img"
+              src={galleryItems[gallerySpotlightIndex]?.image}
+              alt="Gallery spotlight"
+              loading="lazy"
+            />
+          </div>
+        )}
 
         {/* Floating Music Player */}
         <div className="floating-player">
@@ -152,10 +203,7 @@ const LandingPage = () => {
         {showFullBio && bio && (
           <div className="full-bio-overlay">
             <div className="full-bio-content">
-              <button
-                className="close-btn"
-                onClick={() => setShowFullBio(false)}
-              >
+              <button className="close-btn" onClick={() => setShowFullBio(false)}>
                 ✕
               </button>
               <h2>{bio.heading}</h2>
