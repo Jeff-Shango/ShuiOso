@@ -20,8 +20,9 @@ function shuffleArray(arr) {
 
 export default function GalleryBox({ preselectId = null }) {
   const [items, setItems] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeId, setActiveId] = useState(null); // <-- track by id (stable)
 
+  // Fetch gallery
   useEffect(() => {
     sanityClient
       .fetch(GALLERY_QUERY)
@@ -29,51 +30,60 @@ export default function GalleryBox({ preselectId = null }) {
       .catch((err) => console.error("Gallery fetch error:", err));
   }, []);
 
-  // Optional: keep gallery order shuffled on each load
-  const shuffledItems = useMemo(() => shuffleArray(items), [items]);
+  // OPTIONAL: shuffle for display, but selection is by id so it's safe
+  const displayItems = useMemo(() => shuffleArray(items), [items]);
 
-  const activeItem =
-    activeIndex === null ? null : shuffledItems[activeIndex] || null;
-
-  // If a preselectId is provided (from LandingPage click), open that image
+  // Set active image when coming from LandingPage
   useEffect(() => {
     if (!preselectId) return;
-    if (!shuffledItems.length) return;
+    if (!items.length) return;
+    setActiveId(preselectId);
+  }, [preselectId, items.length]);
 
-    const idx = shuffledItems.findIndex((it) => it._id === preselectId);
-    if (idx >= 0) setActiveIndex(idx);
-  }, [preselectId, shuffledItems]);
+  // Find active item + active index in the DISPLAY list (for arrows)
+  const activeIndex = useMemo(() => {
+    if (!activeId) return null;
+    const idx = displayItems.findIndex((it) => it._id === activeId);
+    return idx >= 0 ? idx : null;
+  }, [activeId, displayItems]);
+
+  const activeItem =
+    activeIndex === null ? null : displayItems[activeIndex] || null;
 
   // Keyboard support (ESC close, arrows nav)
   useEffect(() => {
     if (!activeItem) return;
 
     const onKeyDown = (e) => {
-      if (e.key === "Escape") setActiveIndex(null);
-      if (e.key === "ArrowRight") {
-        setActiveIndex((i) => (i + 1) % shuffledItems.length);
+      if (e.key === "Escape") setActiveId(null);
+
+      if (e.key === "ArrowRight" && displayItems.length > 0) {
+        const nextIdx = (activeIndex + 1) % displayItems.length;
+        setActiveId(displayItems[nextIdx]._id);
       }
-      if (e.key === "ArrowLeft") {
-        setActiveIndex((i) => (i - 1 + shuffledItems.length) % shuffledItems.length);
+
+      if (e.key === "ArrowLeft" && displayItems.length > 0) {
+        const prevIdx = (activeIndex - 1 + displayItems.length) % displayItems.length;
+        setActiveId(displayItems[prevIdx]._id);
       }
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [activeItem, shuffledItems.length]);
+  }, [activeItem, activeIndex, displayItems]);
 
-  if (!shuffledItems.length) return null;
+  if (!displayItems.length) return null;
 
   return (
     <section className="gallery-section">
       <h2 className="gallery-title">Gallery</h2>
 
       <div className="gallery-grid">
-        {shuffledItems.map((it, idx) => (
+        {displayItems.map((it) => (
           <button
             key={it._id}
             className="gallery-tile"
-            onClick={() => setActiveIndex(idx)}
+            onClick={() => setActiveId(it._id)}
             aria-label={it.title ? `Open ${it.title}` : "Open image"}
           >
             <img
@@ -87,11 +97,11 @@ export default function GalleryBox({ preselectId = null }) {
       </div>
 
       {activeItem && (
-        <div className="lightbox" onClick={() => setActiveIndex(null)}>
+        <div className="lightbox" onClick={() => setActiveId(null)}>
           <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
             <button
               className="lightbox-close"
-              onClick={() => setActiveIndex(null)}
+              onClick={() => setActiveId(null)}
               aria-label="Close"
             >
               ✕
@@ -114,21 +124,24 @@ export default function GalleryBox({ preselectId = null }) {
               </div>
             )}
 
-            {shuffledItems.length > 1 && (
+            {displayItems.length > 1 && (
               <div className="lightbox-nav">
                 <button
                   className="nav-btn"
-                  onClick={() =>
-                    setActiveIndex((i) => (i - 1 + shuffledItems.length) % shuffledItems.length)
-                  }
+                  onClick={() => {
+                    const prevIdx =
+                      (activeIndex - 1 + displayItems.length) % displayItems.length;
+                    setActiveId(displayItems[prevIdx]._id);
+                  }}
                 >
                   ←
                 </button>
                 <button
                   className="nav-btn"
-                  onClick={() =>
-                    setActiveIndex((i) => (i + 1) % shuffledItems.length)
-                  }
+                  onClick={() => {
+                    const nextIdx = (activeIndex + 1) % displayItems.length;
+                    setActiveId(displayItems[nextIdx]._id);
+                  }}
                 >
                   →
                 </button>
