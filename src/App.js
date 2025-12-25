@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 // import Admin from "./pages/Admin";
 import Bio from "./pages/Bio";
 import Contact from "./pages/Contact";
+import GalleryBox from "./pages/galleryBox";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         {/* <Route path="/admin" element={<Admin />} />  */}
         <Route path="/bio" element={<Bio />} /> 
         <Route path="/contact" element={<Contact />} />
+        <Route path="/gallery" element={<GalleryBox />} />
       </Routes>
       <Footer />
     </Router>
